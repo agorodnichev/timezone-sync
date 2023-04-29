@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sync time</title>
+</head>
+<body>
+    <main>
+        <div class="controls">
+            <div class="source-wrapper">
+                <span>
+                    <label for="city1">Choose source city</label>
+                    <auto-complete id="city1" class="auto-complete-custom-source" wait="0.5"></auto-complete>
+                </span>
+                <span>
+                    <label for="location1">Choose date and time</label>
+                    <input type="datetime-local" name="location1" id="location1">
+                </span>
+            </div>
+            <div class="target-wrapper">
+                <span>
+                    <label for="city2">Choose target city</label>
+                    <auto-complete id="city2" class="auto-complete-custom-target" wait="0.5"></auto-complete>
+                </span>
+                <span>
+                    <output class="target-date-output" for="city location1"></output>
+                </span>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

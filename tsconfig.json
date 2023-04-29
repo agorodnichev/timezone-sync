@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./",
+      "outDir": "./dist/",
+      "noImplicitAny": true,
+      "module": "es6",
+      "target": "es2015",
+      "jsx": "react",
+      "allowJs": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "allowUnreachableCode": false,
+      "allowUnusedLabels": false,
+      "alwaysStrict": true,
+      // "strictNullChecks": true,
+      // "exactOptionalPropertyTypes": true,
+      "noFallthroughCasesInSwitch": true,
+      // "noUnusedLocals": true,
+      "strictBindCallApply": true,
+      "sourceMap": true,
+      "lib": [
+        "DOM",
+        "ES2021",
+        "WebWorker"
+      ]
+    },
+    "include": ["src/**/*"]
+  }

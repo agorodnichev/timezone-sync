@@ -1,0 +1,103 @@
+/* Reset styles */
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+* {
+    font: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+}
+
+body, html {
+    overflow-x: hidden;
+}
+
+
+img, picture, svg {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Variables */
+:root {
+    --yale-blue: #0d3b66;
+    --lemon-chiffon: #FAF0CA;
+    --naples-yellow: #F4D35E;
+    --sandy-brown: #EE964B;
+    --tomato: #F95738;
+}
+
+/* App styles */
+body {
+    background-color: var(--yale-blue);
+    font-family: 'Courier New', monospace;
+}
+
+label {
+    font-size: 1.3rem;
+}
+
+main {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+/* .source-wrapper, .target-wrapper {
+    max-width: 350px;
+} */
+
+.source-wrapper {
+    display: grid;
+    gap: 10px;
+}
+
+.target-wrapper {
+    display: grid;
+    row-gap: 2rem;
+}
+
+.controls {
+    display: grid;
+    grid-auto-flow: row;
+    gap: 25px;
+}
+
+.controls {
+    color: #fff;
+}
+
+input {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.5rem;
+}
+
+output {
+    display: grid;
+    place-items: center;
+    height: 3.75rem;
+    border-radius: 0.625rem;
+    border: 1px dashed #fff;
+    font-size: 2rem;  
+}
+
+/* @media screen and (min-width: 45em) {
+    .controls {
+        grid-auto-flow: column;
+    }
+} */
