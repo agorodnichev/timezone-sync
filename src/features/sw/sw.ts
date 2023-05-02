@@ -25,12 +25,11 @@ self.addEventListener('install', (event: ExtendableEvent) => {
     self.skipWaiting();
 });
 
-self.addEventListener('activate', (event: ExtendableEvent) => {
-    // if "install" phase has finished it means that cities data
-    // is in indexedDB and we don't need to keep json data in the
-    // global (to this module) variable.
-    citiesData = null;
-});
+self.addEventListener('activate', function(event) {
+    event.waitUntil(
+      self.clients.claim()
+    );
+  });
 
 
 /**
