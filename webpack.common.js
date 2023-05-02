@@ -52,7 +52,9 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js", ".scss", ".css"],
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {
