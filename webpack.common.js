@@ -24,14 +24,19 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
         type: "asset/resource",
+        generator: {
+            filename: "[path][name][ext]",
+            outputPath: "assets"
+        }
       },
       {
         test: /\.json$/i,
         type: "asset/resource",
         generator: {
-          filename: '[name][ext]',
-          outputPath: 'assets',
-        }
+          filename: "[name][ext]",
+          outputPath: "assets",
+        },
+        exclude: /manifest\.json$/i,
       },
       {
         test: /\.(sa|sc|c)ss$/i,
@@ -51,17 +56,24 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-        from: path.resolve(__dirname, 'src/assets/data/cities.json'),
-        to: path.resolve(__dirname, 'dist/cities.json'),
+          from: path.resolve(__dirname, "src/assets/data/cities.json"),
+          to: path.resolve(__dirname, "dist/cities.json"),
         },
-      ]
+        {
+          from: path.resolve(__dirname, "src/manifest.json"),
+          to: path.resolve(__dirname, "dist/manifest.json"),
+        },
+        {
+            from: path.resolve(__dirname, "src/assets/images/icons"),
+            to: path.resolve(__dirname, "dist/assets/images/icons"),
+        }
+      ],
     }),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "./src/index.html",
     }),
     new MiniCssExtractPlugin(),
-    // buildWorkboxPlugin(argv.mode),
   ],
   output: {
     filename: "[name].js",

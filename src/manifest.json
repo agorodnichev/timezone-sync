@@ -1,0 +1,25 @@
+{
+    "short_name": "Connect timezones",
+    "name": "Time difference between two locations",
+    "icons": [
+        {
+            "src": "/assets/images/icons/scheduling_512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/assets/images/icons/scheduling_256x256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "/assets/images/icons/scheduling_128x128.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        }
+    ],
+    "id": "/index.html",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "scope": "/"
+}
