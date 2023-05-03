@@ -24,7 +24,7 @@ body, html {
 
 img, picture, svg {
     display: block;
-    max-width: 100%;
+    max-inline-size: 100%;
 }
 
 a {
@@ -43,10 +43,7 @@ a {
 /* App styles */
 body {
     background-color: var(--yale-blue);
-    font-family: 'Courier New', monospace;
-}
-
-label {
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.3rem;
 }
 
@@ -55,10 +52,6 @@ main {
     place-items: center;
     height: 100vh;
 }
-
-/* .source-wrapper, .target-wrapper {
-    max-width: 350px;
-} */
 
 .source-wrapper {
     display: grid;
@@ -73,18 +66,18 @@ main {
 .controls {
     display: grid;
     grid-auto-flow: row;
-    gap: 25px;
+    gap: 1.5625rem;
 }
 
 .controls {
+    padding-inline: 5px;
     color: #fff;
 }
 
 input {
-    width: 100%;
+    inline-size: 100%;
     border-radius: 10px;
-    padding: 10px;
-    font-size: 1.5rem;
+    padding: 0.625rem;
 }
 
 output {
@@ -93,7 +86,6 @@ output {
     height: 3.75rem;
     border-radius: 0.625rem;
     border: 1px dashed #fff;
-    font-size: 2rem;  
 }
 
 /* @media screen and (min-width: 45em) {

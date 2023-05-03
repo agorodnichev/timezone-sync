@@ -55,6 +55,8 @@ searchCustomTarget.addEventListener('selected', event => {
 const dt1 = document.getElementById('location1') as HTMLInputElement;
 const output = document.querySelector('.target-date-output') as HTMLOutputElement;
 
+dt1.value = getCurrentLocalDate();
+
 dt1.addEventListener('change', event => {
   handleOutput();
 });
@@ -105,4 +107,10 @@ function convertTimezones(srcIana: string, targetIana: string, year: number, mon
   date.setMinutes(date.getMinutes() + sourceOffset);
   date.setMinutes(date.getMinutes() - targetOffset);
   return date;
+}
+
+function getCurrentLocalDate() {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().slice(0, 16);
 }

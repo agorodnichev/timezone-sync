@@ -73,7 +73,6 @@ export class AutoCompleterComponent extends HTMLElement {
             this.setTypeAheadListener();
         });
         this.setClickOutsideOfDrowdownWindowObserver();
-        // this.setMouseLeaveOptionListener();
         this.setMouseOverOptionListener();
 
     }
@@ -284,7 +283,8 @@ export class AutoCompleterComponent extends HTMLElement {
         const style: HTMLStyleElement = document.createElement('style');
         style.textContent = `
         :host {
-            all: initial;
+            color: initial;
+            font-size: inherit;
         }
         .autocomplete-wrapper {
           display: block;
@@ -292,16 +292,20 @@ export class AutoCompleterComponent extends HTMLElement {
         }
         .search-element {
           display: block;
-          width: 100%;
-          padding-inline: 10px;
-          padding-block: 11px;
-          border-radius: 10px;
-          font-size: 1.5rem;
+          inline-size: 100%;
+          padding-inline: 0.625rem;
+          padding-block: 0.6875rem;
+          border-radius: 0.625rem;
+          font-size: inherit;
+          font-family: inherit;
+          font-weight: 600;
         }
         .list {
+          border-radius: 0.625rem;
           display: none;
           position: absolute;
           list-style: none;
+          margin-block-start: 0;
           padding-inline-start: 0;
           background-color: #fff;
           border: 1px solid #b0d1ef;
@@ -311,7 +315,6 @@ export class AutoCompleterComponent extends HTMLElement {
           display: block;
           padding: 5px;
           cursor: pointer;
-          font-size: 1.5rem;
           user-select: none;
         }
         .option.active {
@@ -398,7 +401,7 @@ export class AutoCompleterComponent extends HTMLElement {
      */
 
     private defineMinimumLettersWhenAutocompleteShouldStartWork() {
-        let min = this.getAttribute('min-letters');
+        const min = this.getAttribute('min-letters');
         if (!!min && !isNaN(+min)) {
             this.minimumLettersToStartSearch = +min;
         }        
