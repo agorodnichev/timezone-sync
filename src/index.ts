@@ -33,23 +33,33 @@ let timezone2: string;
 
 customElements.define("auto-complete", AutoCompleterComponent);
 
-const searchCustomSource: AutoCompleterComponent = document.querySelector('.auto-complete-custom-source');
-const searchCustomTarget: AutoCompleterComponent = document.querySelector('.auto-complete-custom-target');
-
-searchCustomSource.registerProvider(provider);
-searchCustomTarget.registerProvider(provider);
+const searchCustomSource = registerProviderForTypeAheadElement('.auto-complete-custom-source', provider);
+const searchCustomTarget = registerProviderForTypeAheadElement('.auto-complete-custom-target', provider);
 
 searchCustomSource.addEventListener('selected', event => {
   const detail = (event as CustomEvent).detail;
   timezone1 = detail['tz'];
-  handleOutput();
+  handleOutputElement(timezone1, timezone2, dt1.value);
 });
 
 searchCustomTarget.addEventListener('selected', event => {
   const detail = (event as CustomEvent).detail;
   timezone2 = detail['tz'];
-  handleOutput();
+  handleOutputElement(timezone1, timezone2, dt1.value);
 });
+
+function registerProviderForTypeAheadElement(
+  selector: string,
+  provider: (term: string) =>  Promise<Array<ProviderData>>
+): AutoCompleterComponent {
+  const typeAheadElement = document.querySelector(selector);
+  if (!(typeAheadElement instanceof AutoCompleterComponent)) {
+    throw new Error('Unexpected element type')
+  }
+  typeAheadElement.registerProvider(provider);
+
+  return typeAheadElement;
+}
 
 // DATE AND TIME FIELDS
 const dt1 = document.getElementById('location1') as HTMLInputElement;
@@ -58,16 +68,16 @@ const output = document.querySelector('.target-date-output') as HTMLOutputElemen
 dt1.value = getCurrentLocalDate();
 
 dt1.addEventListener('change', event => {
-  handleOutput();
+  handleOutputElement(timezone1, timezone2, dt1.value);
 });
 
 
-function handleOutput() {
-  if (!timezone1 || !timezone2 || !dt1.value) {
+function handleOutputElement(ianaSrc?: string, ianaTarget?: string, date?: string) {
+  if (!ianaSrc || !ianaTarget || !date) {
     return;
   }
 
-  const input1Date = new Date(dt1.value);
+  const input1Date = new Date(date);
   const year = input1Date.getFullYear();
   const monthIdx = input1Date.getMonth();
   const day = input1Date.getDate();
@@ -75,29 +85,40 @@ function handleOutput() {
   const minutes = input1Date.getMinutes();
 
   const result = convertTimezones(
-    timezone1, 
-    timezone2, 
+    ianaSrc,
+    ianaTarget,
     year,
     monthIdx,
     day,
     hours,
     minutes);
-    
-    output.value = result.toLocaleString();  
+
+  output.value = result.toLocaleString();
 }
 
-
+/**
+ * @param iana - iana timezone representation (for example "Europe/Andorra")
+ * @returns offset in minutes between local to the user timezone
+ * and iana parameter timezone
+ */
 function getOffset(iana: string): number {
   const localNow = new Date();
   localNow.setSeconds(0, 0);
 
-  const ianaDate = new Date(localNow.toLocaleString('en-US', {timeZone: iana}));
+  const ianaDate = new Date(localNow.toLocaleString('en-US', { timeZone: iana }));
   const offset = localNow.getTime() - ianaDate.getTime();
 
   return offset / (1000 * 60);
 }
 
-function convertTimezones(srcIana: string, targetIana: string, year: number, monthIdx: number, day: number, hours: number, minutes: number) {
+function convertTimezones(
+  srcIana: string,
+  targetIana: string,
+  year: number,
+  monthIdx: number,
+  day: number,
+  hours: number,
+  minutes: number): Date {
 
   const date = new Date(year, monthIdx, day, hours, minutes);
   const sourceOffset = getOffset(srcIana);
@@ -109,7 +130,7 @@ function convertTimezones(srcIana: string, targetIana: string, year: number, mon
   return date;
 }
 
-function getCurrentLocalDate() {
+function getCurrentLocalDate(): string {
   const now = new Date();
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
   return now.toISOString().slice(0, 16);
