@@ -93,7 +93,15 @@ function handleOutputElement(ianaSrc?: string, ianaTarget?: string, date?: strin
     hours,
     minutes);
 
-  output.value = result.toLocaleString();
+  output.value = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  }).format(result);
 }
 
 /**

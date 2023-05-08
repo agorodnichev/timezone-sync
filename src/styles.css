@@ -30,10 +30,11 @@ img, picture, svg {
 a {
     text-decoration: none;
 }
-
+/* 0d3b66 */
 /* Variables */
 :root {
-    --yale-blue: #0d3b66;
+    --yale-blue: #12508a;
+    --yale-blue-07-opacity: #12508ab3;
     --lemon-chiffon: #FAF0CA;
     --naples-yellow: #F4D35E;
     --sandy-brown: #EE964B;
@@ -42,7 +43,7 @@ a {
 
 /* App styles */
 body {
-    background-color: var(--yale-blue);
+    background-color: var(--yale-blue-07-opacity);
     font-family: 'Montserrat', sans-serif;
     font-size: 1.3rem;
 }
@@ -74,6 +75,11 @@ main {
     color: #fff;
 }
 
+.controls--wrapper {
+    padding: 1.5rem;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
 input {
     inline-size: 100%;
     border-radius: 10px;
@@ -85,9 +91,17 @@ input {
 output {
     display: grid;
     place-items: center;
-    height: 3.75rem;
+    min-block-size: 3.2rem;
     border-radius: 0.625rem;
     border: 1px dashed #fff;
+    inline-size: 100%;
+    padding-inline: 0.625rem;
+    padding-block: 0.6875rem;    
+}
+
+label {
+    display: inline-block;
+    margin-block-end: 0.75rem;
 }
 
 /* @media screen and (min-width: 45em) {

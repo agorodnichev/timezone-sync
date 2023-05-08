@@ -74,7 +74,7 @@ export class AutoCompleterComponent extends HTMLElement {
         });
         this.setClickOutsideOfDrowdownWindowObserver();
         this.setMouseOverOptionListener();
-
+        this.setDropdownOpenStateListener();
     }
 
     disconnectedCallback() {
@@ -105,7 +105,6 @@ export class AutoCompleterComponent extends HTMLElement {
      * on keyboard navigation.
      */
     private setControlPredictionListKeyBoardNavigationListener() {
-        // TODO (do we need "document"? Maybe better "UL"?)
         document.addEventListener('keydown', (event: KeyboardEvent) => {
             if (!this.isInputElementActive || !this.isDropDownVisible) {
                 return;
@@ -147,8 +146,6 @@ export class AutoCompleterComponent extends HTMLElement {
     }
 
     private setDropDownListItemSelectionOnEnterListener(): void {
-        // TODO: change the way how active element is handled when hover over
-        // so that this handler can be conformed with click and enter events
         this.searchInput.addEventListener('keydown', (event: KeyboardEvent) => {
             if (event.code === 'Enter') {
                 this.listItemSelectionHandler.call(this, event);
@@ -158,6 +155,22 @@ export class AutoCompleterComponent extends HTMLElement {
 
     private setMouseOverOptionListener() {
         this.uL.addEventListener('mouseover', this.toggleActiveLiElementHandler.bind(this));
+    }
+
+    private setDropdownOpenStateListener() {
+        this.searchInput.addEventListener('focus', async (event: FocusEvent) => {
+            if (this.isDropDownVisible) {
+                // shouldn't happen, but to be consistent it's here
+                return;
+            }
+            const currentTerm = this.searchInput.value;
+            
+            if (currentTerm.length < this.minimumLettersToStartSearch) {
+                return;
+            }
+
+            await this.fillDrowpdownFromSearch(currentTerm);
+        })
     }
 
     /**
@@ -218,14 +231,7 @@ export class AutoCompleterComponent extends HTMLElement {
             return;
         }
 
-        const list = await this.provider(term);
-        this.uL.style.display = list.length ? 'block' : 'none';
-        const documentFragment = document.createDocumentFragment();
-        for (const data of list) {
-            const option = this.createOption(data);
-            documentFragment.appendChild(option);
-        }
-        this.uL.appendChild(documentFragment);
+        await this.fillDrowpdownFromSearch(term);
     }
 
     /**
@@ -271,6 +277,7 @@ export class AutoCompleterComponent extends HTMLElement {
         // enrich UL
         uL.id = "autocomplete-list";
         uL.classList.add('list');
+        uL.style.display = 'none';
 
         // structure
         divWrapper.appendChild(searchInput);
@@ -319,7 +326,7 @@ export class AutoCompleterComponent extends HTMLElement {
         }
         .option.active {
             color: #fff;
-            background-color: #0d3b66;
+            background-color: #12508a;
         }
       `;
         return style;
@@ -392,7 +399,18 @@ export class AutoCompleterComponent extends HTMLElement {
 
     private dispatchSelectedDataEvent(data: any) {
         this.dispatchEvent(new CustomEvent("selected", {detail: data}));
-    }    
+    }
+
+    private async fillDrowpdownFromSearch(term: string) {
+        const list = await this.provider(term);
+        this.uL.style.display = list.length ? 'block' : 'none';
+        const documentFragment = document.createDocumentFragment();
+        for (const data of list) {
+            const option = this.createOption(data);
+            documentFragment.appendChild(option);
+        }
+        this.uL.appendChild(documentFragment);        
+    }
 
     /**
      * ------------------------------------------

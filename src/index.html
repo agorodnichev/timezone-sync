@@ -13,7 +13,7 @@
 <body>
     <main>
         <div class="controls">
-            <div class="source-wrapper">
+            <div class="source-wrapper controls--wrapper">
                 <span>
                     <label for="city1">Choose source city</label>
                     <auto-complete id="city1" class="auto-complete-custom-source" wait="0.5"></auto-complete>
@@ -23,15 +23,15 @@
                     <input type="datetime-local" name="location1" id="location1">
                 </span>
             </div>
-            <div class="target-wrapper">
+            <div class="target-wrapper controls--wrapper">
                 <span>
                     <label for="city2">Choose target city</label>
                     <auto-complete id="city2" class="auto-complete-custom-target" wait="0.5"></auto-complete>
                 </span>
-                <span>
-                    <output class="target-date-output" for="city location1"></output>
-                </span>
             </div>
+            <span>
+                <output class="target-date-output" for="city location1"></output>
+            </span>            
         </div>
     </main>
 </body>
